@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script data-require="angular.js@1.4.3" data-semver="1.4.3" src="https://code.angularjs.org/1.4.3/angular.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+  <script src="weatherCtrl.js"></script>
+  <script src="weatherSvc.js"></script>
+</head>
+
+<body ng-app="weatherApp">
+  <h1>Angular Weather Application</h1>
+  <div ng-controller="weatherCtrl as vm">
+    <form>
+      <input type="text" ng-model="vm.searchCity">
+      <input type="submit" value="Search" ng-click="vm.search(vm.searchCity)">
+    </form>
+    {{vm.message}}
+
+    <div style="text-align: center">
+      <h2 ng-show="vm.city">Current weather for {{ vm.city }}</h2>
+      <img ng-src='{{ vm.icon }}' />
+      <br /> {{ vm.desc }}
+      <br /> {{ vm.temp }}
+      <br />
+    </div>
+
+    <div ng-show="vm.forecast">
+      <h2>5 day forecast</h2>
+    </div>
+    <div ng-show="vm.forecast">
+      <table width="400px">
+        <tr>
+          <th>Day</th>
+          <th>Low</th>
+          <th>High</th>
+          <th>Description</th>
+        </tr>
+
+        <tr ng-repeat="day in vm.forecast">
+          <td>{{ day.dt * 1000 | date:'yyyy-MM-dd' }}</td>
+          <td>{{day.temp.min}}</td>
+          <td>{{day.temp.max}}</td>
+          <td>{{day.weather[0].description}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
